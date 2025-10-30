@@ -42,10 +42,53 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+body {
+    background-color: #172b4e;
+    color: #f2f2f2f2;
+}
+
+h2 {
+    color: #00d7b5;
+}
+
+.recentPanels {
+    background-color: #007589;
+    color: #f2f2f2;
+    padding: 5px;
+    border-radius: 8px;
+    width: 49.5%;
+    margin: auto;
+}
+
+.averageChart {
+    background-color: #01567b;
+    border-radius: 8px;
+    padding: 5px;
+    width: 66%;
+}
+
+.dataChart {
+    background-color: #007589;
+    border-radius: 8px;
+    padding: 5px;
+    width: 33%;
+    margin: auto;
+    display: inline-block;
+    margin-top: 0;
+}
+
+.mainStats {
+    background-color: #01567b;
+    border-radius: 8px;
+    padding: 5px;
+    width: 24.5%;
+    margin: auto;
 }
