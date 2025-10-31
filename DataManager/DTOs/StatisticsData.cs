@@ -8,5 +8,4 @@ internal struct StatisticsData {
     public float HighGame { get; set; }
     public float HighSeries { get; set; }
     public float HighAverage { get; set; }
-    public float GamesBowled { get; set; }
 }

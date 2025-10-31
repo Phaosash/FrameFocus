@@ -51,15 +51,63 @@ public class DataValueManager {
         }
     }
 
-    private void CompareHighGame (){
-        try {
-            float tempValue = DataCalculations.CompareValues(_recentStatisticsData.HighGame, _statisticsData.HighGame);
+    //  This method returns the most recently entered average.
+    public float GetRecentAverage (){
+        return _recentStatisticsData.Average;
+    }
 
-            if (tempValue == 1){
-                _statisticsData.HighGame = _recentStatisticsData.HighGame;
-            }
-        } catch (Exception ex){
-            LoggingManager.Instance.LogError(ex, "");
-        }
+    //  This method returns the most recent strike percentage.
+    public float GetRecentStrikePercentage (){
+        return _recentStatisticsData.StrikePercentage;
+    }
+
+    //  This method returns the most recent spare percentage.
+    public float GetRecentSparePercentage (){
+        return _recentStatisticsData.SparePercentage;
+    }
+
+    //  This method returns the most recent open frame percentage.
+    public float GetRecentOpenPercentage (){
+        return _recentStatisticsData.OpenFramePercentage;
+    }
+
+    //  This method returns the overall average.
+    public float GetAverage (){
+        return _statisticsData.Average;
+    }
+
+    //  This method returns the overall strike percentage
+    public float GetStrikePercentage (){
+        return _statisticsData.StrikePercentage;
+    }
+
+    //  This method returns the overall spare percentage
+    public float GetSparePercentage (){
+        return _statisticsData.SparePercentage;
+    }
+
+    //  This method returns the overall open frame percentage
+    public float GetOpenPercentage (){
+        return _statisticsData.SparePercentage;
+    }
+
+    //  This method returns the highest recorded single game score value.
+    public float GetHighGame (){
+        return _statisticsData.HighGame;
+    }
+
+    //  This method returns the highest recorded game series.
+    public float GetSeriesValue (){
+        return _statisticsData.HighSeries;
+    }
+
+    //  This method returns the highest recorded average for a series
+    public float GetHighAverage (){
+        return _statisticsData.HighAverage;
+    }
+
+    //  This method returns the current handicap
+    public float GetHandicap (){
+        return DataCalculations.CalculateHandicap(_statisticsData.Average);
     }
 }
