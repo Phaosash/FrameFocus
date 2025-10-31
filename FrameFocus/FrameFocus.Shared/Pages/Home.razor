@@ -1,44 +1,45 @@
 ﻿@page "/"
 @using FrameFocus.Shared.Services
+@using FrameFocus.PageManagers
 @inject IFormFactor FormFactor
 
 <PageTitle>FrameFocus</PageTitle>
 
-<h2> Recent Details </h2>
+<h2> Recent </h2>
 
 <!--    Top Row (Average chart and overall data)    -->
 <div style="width: 100%; display:flex;">
     <!--    Left side content   -->
     <div style="width: 33%; margin: auto; display: inline-block;">
         <div style="display:flex;">
-            <div class="recentPanels">
-                <h2>Average</h2>
+            <div class="@_pageManager.DataBackground.AverageBackground">
+                <h4>Average</h4>
             </div>
 
             <div class="recentPanels">
-                <h2>Strike %</h2>
+                <h4>Strike Percentage</h4>
             </div>
         </div>
 
         <div style="display:flex; margin-top: 0.5em;">
-            <div class="recentPanels">
-                <h2>Spare %</h2>
+            <div class="recentPanelsAbove">
+                <h4>Spare Percentage</h4>
             </div>
 
-            <div class="recentPanels">
-                <h2>Open %</h2>
+            <div class="recentPanelsBelow">
+                <h4>Open Percentage</h4>
             </div>
         </div>
     </div>
 
     <!--    Right Side Content  -->
     <div class="averageChart">
-        <h2> Line chart of averages will go here (eventually) </h2>
+        <h4> Line chart of averages will go here (eventually) </h4>
         <p> Showing average(s) over time </p>
     </div>
 </div><br />
 
-<h2>Overall Details</h2>
+<h2>Overall</h2>
 
 <!--    Second Row (Strike/Spare/Open Chart, Game Details)-->
 <div style="width: 100%; display:flex; margin-top: 1em;">
@@ -46,48 +47,48 @@
     <div style="width: 66%; margin: auto; display: inline-block;">
         <div style="display:flex;">
             <div class="mainStats">
-                <h2>Average</h2>
+                <h4>Average</h4>
             </div>
 
             <div class="mainStats">
-                <h2>Strike %</h2>
+                <h4>Strike Percentage</h4>
             </div>
 
             <div class="mainStats">
-                <h2>Spare %</h2>
+                <h4>Spare Percentage</h4>
             </div>
 
             <div class="mainStats">
-                <h2>Open %</h2>
+                <h4>Open Percentage</h4>
             </div>
         </div>
 
         <div style="display:flex; margin-top:0.5em;">
             <div class="mainStats">
-                <h2>High Game</h2>
+                <h4>High Game</h4>
             </div>
 
             <div class="mainStats">
-                <h2>High Series</h2>
+                <h4>Highest Series</h4>
             </div>
 
             <div class="mainStats">
-                <h2>High Average</h2>
+                <h4>Highest Average</h4>
             </div>
 
             <div class="mainStats">
-                <h2>Games Bowled</h2>
+                <h4>Games Bowled</h4>
             </div>
         </div>
     </div>
 
     <!--    Right Side Content  -->
     <div class="dataChart">
-        <h2> Pie chart will go here </h2>
+        <h4> Pie chart will go here </h4>
         <p> Showing visual comparison of Strike/Spare/Open frame percentage</p>
     </div>
 </div>
 
 @code {
-    
+    private HomePageManager _pageManager = new HomePageManager();
 }

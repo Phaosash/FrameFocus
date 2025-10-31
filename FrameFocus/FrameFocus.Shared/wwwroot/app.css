@@ -59,13 +59,41 @@ h2 {
     color: #00d7b5;
 }
 
+h4 {
+    color: #f2f2f2;
+}
+
 .recentPanels {
+    background-color: #01567b;
+    color: #f2f2f2;
+    padding: 5px;
+    border-radius: 8px;
+    width: 48.5%;
+    margin: auto;
+    height: 10rem;
+    text-align: center;
+}
+
+.recentPanelsAbove {
     background-color: #007589;
     color: #f2f2f2;
     padding: 5px;
     border-radius: 8px;
-    width: 49.5%;
+    width: 48.5%;
     margin: auto;
+    height: 10rem;
+    text-align: center;
+}
+
+.recentPanelsBelow {
+    background-color: #cc3333;
+    color: #f2f2f2;
+    padding: 5px;
+    border-radius: 8px;
+    width: 48.5%;
+    margin: auto;
+    height: 10rem;
+    text-align: center;
 }
 
 .averageChart {
@@ -76,19 +104,28 @@ h2 {
 }
 
 .dataChart {
-    background-color: #007589;
+    background-color: #01567b;
     border-radius: 8px;
     padding: 5px;
     width: 33%;
     margin: auto;
     display: inline-block;
     margin-top: 0;
+    height: 20.5rem;
 }
 
 .mainStats {
     background-color: #01567b;
+    color: #f2f2f2;
     border-radius: 8px;
     padding: 5px;
-    width: 24.5%;
+    width: 24%;
     margin: auto;
+    height: 10rem;
+    text-align: center;
+}
+
+.sidePanel {
+    background-color: #01567b;
+    height: 100vh;
 }
