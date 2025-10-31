@@ -1,0 +1,66 @@
+{
+  "lastSession": {
+    "sessionId": "2025-10-30-001",
+    "date": "2025-10-30",
+    "average": 192.3,
+    "strikePercentage": 48.5,
+    "sparePercentage": 37.2,
+    "openFramePercentage": 14.3,
+    "games": [
+      {
+        "gameNumber": 1,
+        "score": 185,
+        "strikes": 6,
+        "spares": 3,
+        "openFrames": 1
+      },
+      {
+        "gameNumber": 2,
+        "score": 198,
+        "strikes": 7,
+        "spares": 2,
+        "openFrames": 1
+      },
+      {
+        "gameNumber": 3,
+        "score": 194,
+        "strikes": 5,
+        "spares": 5,
+        "openFrames": 0
+      }
+    ]
+  },
+  "overallStats": {
+    "totalGames": 127,
+    "average": 187.9,
+    "strikePercentage": 46.1,
+    "sparePercentage": 38.4,
+    "openFramePercentage": 15.5,
+    "highGame": 256,
+    "highestSeries": 695,
+    "highestAverage": 203.2,
+    "handicap": 12
+  },
+  "trendData": [
+    {
+      "date": "2025-10-01",
+      "average": 178.6
+    },
+    {
+      "date": "2025-10-08",
+      "average": 185.3
+    },
+    {
+      "date": "2025-10-15",
+      "average": 191.2
+    },
+    {
+      "date": "2025-10-22",
+      "average": 189.5
+    },
+    {
+      "date": "2025-10-30",
+      "average": 192.3
+    }
+  ]
+}
