@@ -15,13 +15,11 @@ public class DashboardDto {
 }
 
 public class LastSessionDto {
-    public string SessionId { get; set; }
-    public DateTime Date { get; set; }
-    public double Average { get; set; }
-    public double StrikePercentage { get; set; }
-    public double SparePercentage { get; set; }
-    public double OpenFramePercentage { get; set; }
-    public List<ExampleGameDTO> Games { get; set; }
+    public int SessionId { get; set; }
+    public float Average { get; set; }
+    public float StrikePercentage { get; set; }
+    public float SparePercentage { get; set; }
+    public float OpenFramePercentage { get; set; }
 }
 
 public class ExampleGameDTO2 {
@@ -33,7 +31,6 @@ public class ExampleGameDTO2 {
 }
 
 public class OverallStatsDto {
-    public int TotalGames { get; set; }
     public double Average { get; set; }
     public double StrikePercentage { get; set; }
     public double SparePercentage { get; set; }
