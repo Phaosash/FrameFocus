@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataManager\DataManager.csproj" />
     <ProjectReference Include="..\ErrorLogging\ErrorLogging.csproj" />
   </ItemGroup>
 
