@@ -4,11 +4,12 @@ using ErrorLogging;
 namespace BowlingGameManager;
 
 public class BowlingGame {
-    private readonly List<Frame> _frames = [];
+    public List<Frame> Frames { get; private set; }
     private int _currentFrameIndex = 0;
     private bool _isFinished = false;
 
     public BowlingGame (){
+        Frames = [];
         InitialiseFrames();
     }
 
@@ -16,8 +17,15 @@ public class BowlingGame {
         int frameCount = 10;
 
         for (int i = 0; i < frameCount; i++){
-            _frames.Add(new Frame(0, 0));
+            Frames.Add(new Frame(0, 0));
         }
+    }
+
+    public void ResetGame (){
+        Frames.Clear();
+        _currentFrameIndex = 0;
+
+        InitialiseFrames();
     }
 
     public void Shot (float count){
@@ -35,7 +43,7 @@ public class BowlingGame {
             return;
         }
 
-        var currentFrame = _frames[_currentFrameIndex];
+        var currentFrame = Frames[_currentFrameIndex];
 
         if (currentFrame.FirstShot == zeroValue){
             if (count > maxCountValue){
@@ -76,18 +84,31 @@ public class BowlingGame {
         int zeroValue = 0;
 
         try {
-            for (int i = zeroValue; i < _frames.Count; i++){
-                var frame = _frames[i];
+            for (int i = zeroValue; i < tenthFrameIndex; i++){
+                var frame = Frames[i];
 
                 score += frame.FrameScore;
 
-                if (frame.IsStrike && i < tenthFrameIndex){
-                    var nextFrame = _frames[i + 1];
-                    score += nextFrame.FirstShot + (nextFrame.IsStrike && i < 8 ? _frames[i + 2].SecondShot : nextFrame.SecondShot);
-                } else if (frame.IsSpare && i < tenthFrameIndex){
-                    score += _frames[i + 1].FirstShot;
+                if (frame.IsStrike){
+                    var nexFrame = Frames[i + 1];
+
+                    score += nexFrame.FirstShot;
+
+                    if (nexFrame.IsStrike && i < tenthFrameIndex - 1){
+                        score += Frames[i + 2].FirstShot;
+                    } else {
+                        score += nexFrame.SecondShot;
+                    }
+                } else if (frame.IsSpare){
+                    score += Frames[i + 1].FirstShot;
                 }
+
             }
+
+            var lastFrame = Frames[tenthFrameIndex];
+            score += lastFrame.FrameScore;
+
+            LoggingManager.Instance.LogInformation($"Final Score: {score}");
 
             return score;
         } catch (IndexOutOfRangeException ex){

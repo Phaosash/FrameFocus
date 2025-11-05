@@ -1,6 +1,6 @@
 ﻿namespace BowlingGameManager.DTOs;
 
-internal class Frame {
+public class Frame {
     private readonly float frameScoreTarget = 10;
     private readonly float lowestValue = 0;
     private readonly float tenthFrameIndex = 9;
@@ -25,7 +25,7 @@ internal class Frame {
 
     public float FrameScore => FirstShot + SecondShot + (IsStrike || IsSpare ? BonusShot : lowestValue);
 
-    public Frame (float firstValue, float secondValue, float bonusValue = 0){
+    public Frame (float firstValue = 0, float secondValue = 0, float bonusValue = 0){
         if (!IsValidShot(firstValue)){
             throw new ArgumentException("Invalid roll: First roll exceeds valid pin range.");
         }

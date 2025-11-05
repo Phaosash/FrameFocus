@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BowlingGameManager\BowlingGameManager.csproj" />
     <ProjectReference Include="..\..\FrameFocus.PageManagers\FrameFocus.PageManagers.csproj" />
   </ItemGroup>
 

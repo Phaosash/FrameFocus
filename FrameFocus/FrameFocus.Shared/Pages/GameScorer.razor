@@ -1,0 +1,52 @@
+﻿@page "/games"
+@using BowlingGameManager
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>Bowling Game</PageTitle>
+
+<h3>Enter Bowling Rolls</h3>
+
+@if (_gameManager.TotalScore() > 0){
+	<h4>Total Score: @_gameManager.TotalScore()</h4>
+}
+
+<div class="bowling-game-container">
+    @for (var i = 0; i < 10; i++){
+        var frame = _gameManager.Frames[i];
+        <div class="frame">
+            <h5>Frame @i + 1</h5>
+
+            <!-- First Roll -->
+            <div>
+                <label>Roll 1:</label>
+                <input type="number" min="0" max="10" @bind="frame.FirstShot" />
+            </div>
+
+            <!-- Second Roll -->
+            <div>
+                <label>Roll 2:</label>
+                <input type="number" min="0" max="10" @bind="frame.SecondShot" />
+            </div>
+
+            <!-- Third Roll (for the 10th frame) -->
+            @if (i == 9 && (frame.IsStrike || frame.IsSpare))
+            {
+                <div>
+                    <label>Roll 3:</label>
+                    <input type="number" min="0" max="10" @bind="frame.BonusShot" />
+                </div>
+            }
+
+            <hr />
+        </div>
+    }
+</div>
+
+@code {
+    private BowlingGame _gameManager = new BowlingGame();
+
+    private void CalculateScore (){
+        _gameManager.TotalScore();
+        StateHasChanged();
+    }
+}
