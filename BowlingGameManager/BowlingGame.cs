@@ -5,11 +5,13 @@ namespace BowlingGameManager;
 
 public class BowlingGame {
     public List<Frame> Frames { get; private set; }
+    public List<float> FrameScores { get; private set; }
     private int _currentFrameIndex = 0;
     private bool _isFinished = false;
 
     public BowlingGame (){
         Frames = [];
+        FrameScores = [];
         InitialiseFrames();
     }
 
@@ -84,32 +86,38 @@ public class BowlingGame {
         int zeroValue = 0;
 
         try {
+            FrameScores.Clear();
+
             for (int i = zeroValue; i < tenthFrameIndex; i++){
                 var frame = Frames[i];
 
                 score += frame.FrameScore;
 
                 if (frame.IsStrike){
-                    var nexFrame = Frames[i + 1];
+                    var nextFrame = Frames[i + 1];
 
-                    score += nexFrame.FirstShot;
+                    score += nextFrame.FirstShot;
 
-                    if (nexFrame.IsStrike && i < tenthFrameIndex - 1){
+                    if (nextFrame.IsStrike && i < tenthFrameIndex - 1){
                         score += Frames[i + 2].FirstShot;
                     } else {
-                        score += nexFrame.SecondShot;
+                        score += nextFrame.SecondShot;
                     }
                 } else if (frame.IsSpare){
                     score += Frames[i + 1].FirstShot;
                 }
 
+                FrameScores.Add(score);
+                LoggingManager.Instance.LogInformation($"Frame {i + 1} score: {score}");
             }
 
             var lastFrame = Frames[tenthFrameIndex];
             score += lastFrame.FrameScore;
 
+            FrameScores.Add(score);
+            
             LoggingManager.Instance.LogInformation($"Final Score: {score}");
-
+            
             return score;
         } catch (IndexOutOfRangeException ex){
             LoggingManager.Instance.LogError(ex, "Failed to calculate the score an Index was out of range.");
