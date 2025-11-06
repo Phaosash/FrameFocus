@@ -1,0 +1,147 @@
+﻿@page "/scores"
+
+<PageTitle>Bowling Score Sheet </PageTitle>
+
+<h3>Game 1</h3>
+
+<style>
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        width: 100%;
+    }
+
+    /* Header row: just numbers centered */
+    .header-box {
+        border: 1px solid #11d5b6;
+        text-align: center;
+        font-weight: bold;
+        background-color: #115579;
+        margin: 2px;
+        border-radius: 8px;
+    }
+
+    /* Second row container box */
+    .container-box {
+        border-top: 1px solid #11d5b6;
+        box-sizing: border-box;
+        height: 7rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* Two smaller boxes inside container */
+    .small-box {
+        border: 1px solid #11d5b6;
+        height: 40%;
+        width: 33%;
+        box-sizing: border-box;
+        margin: 2px;
+        border-radius: 8px;
+    }
+
+    .input-box {
+        border: 1px solid #11d5b6;
+        text-align: center;
+        background-color: #115579;
+        margin: auto;
+        margin-top: 1rem;
+        border-radius: 8px;
+        width: 95%;
+    }
+
+    .score-button {
+        margin: 5px;
+        width: 13%;
+        height: 2rem;
+        border-radius: 8px;
+    }
+</style>
+
+<!-- Top header row -->
+<div class="grid-container">
+    <div class="header-box">Frame 1
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 2
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 3
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 4
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 5
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 6
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 7
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 8
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">Frame 9
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+    <div class="header-box">
+        Frame 10
+        <div class="container-box">
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+            <div class="small-box"></div>
+        </div>
+    </div>
+</div>
+
+<!--    Second row, input section   -->
+<div class="input-box">
+    <input type="button" value="1" class="score-button" />
+    <input type="button" value="2" class="score-button" />
+    <input type="button" value="3" class="score-button" />
+    <input type="button" value="4" class="score-button" />
+    <input type="button" value="5" class="score-button" />
+    <input type="button" value="6" class="score-button" />
+    <input type="button" value="7" class="score-button" />
+    <input type="button" value="8" class="score-button" />
+    <input type="button" value="9" class="score-button" />
+    <input type="button" value="X" class="score-button" />
+    <input type="button" value="/" class="score-button" />
+    <input type="button" value="-" class="score-button" />
+    <input type="button" value="F" class="score-button" />
+    <input type="button" value="&#x232B;" class="score-button" />
+</div>
+
+@code {
+
+}
