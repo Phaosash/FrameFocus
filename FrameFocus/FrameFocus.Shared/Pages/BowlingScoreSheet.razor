@@ -1,4 +1,6 @@
 ﻿@page "/scores"
+@using BowlingGameManager
+@using ErrorLogging
 
 <PageTitle>Bowling Score Sheet </PageTitle>
 
@@ -25,7 +27,6 @@
     .container-box {
         border-top: 1px solid #11d5b6;
         box-sizing: border-box;
-        height: 7rem;
         display: flex;
         justify-content: flex-end;
     }
@@ -33,11 +34,12 @@
     /* Two smaller boxes inside container */
     .small-box {
         border: 1px solid #11d5b6;
-        height: 40%;
-        width: 33%;
+        height: 3rem;
+        width: 3rem;
         box-sizing: border-box;
         margin: 2px;
         border-radius: 8px;
+        align-content: center;
     }
 
     .input-box {
@@ -56,92 +58,122 @@
         height: 2rem;
         border-radius: 8px;
     }
+
+    .frame-total {
+        text-align: center;
+        color: #11d5b6;
+        font-weight: bold;
+        margin-top: 1rem;
+        font-size: 24pt;
+    }
 </style>
 
 <!-- Top header row -->
 <div class="grid-container">
-    <div class="header-box">Frame 1
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
+    @for (int i = 0; i < _gameManager.Frames.Count; i++){
+        var frame = _gameManager.Frames[i];
+
+        <div class="header-box">
+            Frame @(i + 1)
+
+            <!-- shots -->
+            <div class="container-box">
+                <div class="small-box">
+                    @DisplayValue(frame.FirstShot)
+
+                    @if(frame.FirstShot != null){
+                        CalculateSpareValue(frame.FirstShot.Value);
+                    }
+                </div>
+                <div class="small-box">@DisplayValue(frame.SecondShot, frame.FirstShot)</div>
+
+                @if (i == 9){
+                    <div class="small-box">@DisplayValue(frame.BonusShot, frame.SecondShot)</div>
+                }
+            </div>
+
+            <!-- running total (new) -->
+            <div class="frame-total">
+                @DisplayRunningTotal(i)
+            </div>
         </div>
-    </div>
-    <div class="header-box">Frame 2
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 3
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 4
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 5
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 6
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 7
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 8
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">Frame 9
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
-    <div class="header-box">
-        Frame 10
-        <div class="container-box">
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-            <div class="small-box"></div>
-        </div>
-    </div>
+    }
 </div>
 
 <!--    Second row, input section   -->
 <div class="input-box">
-    <input type="button" value="1" class="score-button" />
-    <input type="button" value="2" class="score-button" />
-    <input type="button" value="3" class="score-button" />
-    <input type="button" value="4" class="score-button" />
-    <input type="button" value="5" class="score-button" />
-    <input type="button" value="6" class="score-button" />
-    <input type="button" value="7" class="score-button" />
-    <input type="button" value="8" class="score-button" />
-    <input type="button" value="9" class="score-button" />
-    <input type="button" value="X" class="score-button" />
-    <input type="button" value="/" class="score-button" />
-    <input type="button" value="-" class="score-button" />
-    <input type="button" value="F" class="score-button" />
-    <input type="button" value="&#x232B;" class="score-button" />
+    <input type="button" value="1" class="score-button" @onclick="() => AddValueToScore(1)" />
+    <input type="button" value="2" class="score-button" @onclick="() => AddValueToScore(2)" />
+    <input type="button" value="3" class="score-button" @onclick="() => AddValueToScore(3)" />
+    <input type="button" value="4" class="score-button" @onclick="() => AddValueToScore(4)" />
+    <input type="button" value="5" class="score-button" @onclick="() => AddValueToScore(5)" />
+    <input type="button" value="6" class="score-button" @onclick="() => AddValueToScore(6)" />
+    <input type="button" value="7" class="score-button" @onclick="() => AddValueToScore(7)" />
+    <input type="button" value="8" class="score-button" @onclick="() => AddValueToScore(8)" />
+    <input type="button" value="9" class="score-button" @onclick="() => AddValueToScore(9)" />
+    <input type="button" value="X" class="score-button" @onclick="() => AddValueToScore(10)" />
+    <input type="button" value="/" class="score-button" @onclick="() => AddValueToScore(_spareValue)" />
+    <input type="button" value="-" class="score-button" @onclick="() => AddValueToScore(0)" />
+    <input type="button" value="F" class="score-button" @onclick="() => AddValueToScore(0)" />
+    <input type="button" value="&#x232B;" class="score-button" @onclick="() => RemoveLastValue()" />
 </div>
 
 @code {
+    private readonly BowlingGame _gameManager = new();
+    private float _spareValue = 0;
 
+    //  This method is used to initialise adding the score on the backend.
+    private void AddValueToScore (float value){
+        _gameManager.RecordShot(value);
+        StateHasChanged();
+    }
+
+    private void RemoveLastValue (){
+        //  TODO: Tell the data manager to remove the last entry
+    }
+
+    //  This method is used to display the special characters on the score board.
+    private string DisplayValue(float? value, float? firstShot = null){
+        float maxCount = 10;
+
+        if (value == null){
+            return string.Empty;
+        }
+
+        if (value == 0){
+            return "-";
+        }
+
+        if (firstShot.HasValue && (firstShot.Value + value.Value == maxCount) && firstShot.Value != maxCount && value != maxCount){
+            return "/";
+        }
+
+        if (firstShot.HasValue && (firstShot.Value + value == maxCount) && firstShot.Value != maxCount && value == maxCount){
+            return "/";
+        }
+
+        if (value == 10){
+            return "X";
+        }
+
+        return value.Value.ToString();
+    }
+
+    //  This method is used to display the running total for the game.
+    private string DisplayRunningTotal (int frameIndex){
+        _gameManager.TotalScore();
+
+        if (frameIndex < _gameManager.FrameScores.Count){
+            return _gameManager.FrameScores[frameIndex].ToString();
+        }
+
+        return string.Empty;
+    }
+
+    //  This method is used to calculate the spare value.
+    private void CalculateSpareValue (float value){
+        float maxCount = 10;
+
+        _spareValue = (maxCount - value);
+    }
 }

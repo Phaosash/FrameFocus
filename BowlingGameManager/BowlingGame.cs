@@ -7,6 +7,8 @@ public class BowlingGame {
     public List<Frame> Frames { get; private set; }
     public List<float> FrameScores { get; private set; }
 
+    private int _currentFrameIndex = 0;
+
     public BowlingGame (){
         Frames = [];
         FrameScores = [];
@@ -18,6 +20,37 @@ public class BowlingGame {
 
         for (int i = 0; i < frameCount; i++){
             Frames.Add(new Frame(0, 0));
+        }
+    }
+
+    public void RecordShot (float value){
+        if (_currentFrameIndex >= 10){
+            return;
+        }
+
+        var frame = Frames[_currentFrameIndex];
+
+        if (frame.FirstShot == null){
+            frame.FirstShot = value;
+
+            if (frame.IsStrike && _currentFrameIndex < 9){
+                _currentFrameIndex++;
+            }
+            return;
+        }
+
+        if (frame.SecondShot == null){
+            frame.SecondShot = value;
+
+            if (_currentFrameIndex < 9){
+                _currentFrameIndex++;
+            }
+            return;
+        }
+
+        if (_currentFrameIndex == 9 && (frame.IsStrike || frame.IsSpare)){
+            frame.BonusShot = value;
+            _currentFrameIndex++;
         }
     }
 
@@ -37,15 +70,15 @@ public class BowlingGame {
                 if (frame.IsStrike){
                     var nextFrame = Frames[i + 1];
 
-                    score += nextFrame.FirstShot;
+                    score += nextFrame.FirstShot ?? 0;
 
                     if (nextFrame.IsStrike && i < tenthFrameIndex - 1){
-                        score += Frames[i + 2].FirstShot;
+                        score += Frames[i + 2].FirstShot ?? 0;
                     } else {
-                        score += nextFrame.SecondShot;
+                        score += nextFrame.SecondShot ?? 0;
                     }
                 } else if (frame.IsSpare){
-                    score += Frames[i + 1].FirstShot;
+                    score += Frames[i + 1].FirstShot ?? 0;
                 }
 
                 FrameScores.Add(score);
@@ -56,9 +89,8 @@ public class BowlingGame {
             score += lastFrame.FrameScore;
 
             FrameScores.Add(score);
-            
             LoggingManager.Instance.LogInformation($"Final Score: {score}");
-            
+
             return score;
         } catch (IndexOutOfRangeException ex){
             LoggingManager.Instance.LogError(ex, "Failed to calculate the score an Index was out of range.");
