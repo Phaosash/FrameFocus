@@ -6,68 +6,6 @@
 
 <h3>Game 1</h3>
 
-<style>
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        width: 100%;
-    }
-
-    /* Header row: just numbers centered */
-    .header-box {
-        border: 1px solid #11d5b6;
-        text-align: center;
-        font-weight: bold;
-        background-color: #115579;
-        margin: 2px;
-        border-radius: 8px;
-    }
-
-    /* Second row container box */
-    .container-box {
-        border-top: 1px solid #11d5b6;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    /* Two smaller boxes inside container */
-    .small-box {
-        border: 1px solid #11d5b6;
-        height: 3rem;
-        width: 3rem;
-        box-sizing: border-box;
-        margin: 2px;
-        border-radius: 8px;
-        align-content: center;
-    }
-
-    .input-box {
-        border: 1px solid #11d5b6;
-        text-align: center;
-        background-color: #115579;
-        margin: auto;
-        margin-top: 1rem;
-        border-radius: 8px;
-        width: 95%;
-    }
-
-    .score-button {
-        margin: 5px;
-        width: 13%;
-        height: 2rem;
-        border-radius: 8px;
-    }
-
-    .frame-total {
-        text-align: center;
-        color: #11d5b6;
-        font-weight: bold;
-        margin-top: 1rem;
-        font-size: 24pt;
-    }
-</style>
-
 <!-- Top header row -->
 <div class="grid-container">
     @for (int i = 0; i < _gameManager.Frames.Count; i++){
@@ -85,7 +23,11 @@
                         CalculateSpareValue(frame.FirstShot.Value);
                     }
                 </div>
-                <div class="small-box">@DisplayValue(frame.SecondShot, frame.FirstShot)</div>
+                <div class="small-box">
+                    <!--    Get the inputted value and compare to _spareValue   -->
+
+                    @DisplayValue(frame.SecondShot, frame.FirstShot)
+                </div>
 
                 @if (i == 9){
                     <div class="small-box">@DisplayValue(frame.BonusShot, frame.SecondShot)</div>
@@ -115,7 +57,7 @@
     <input type="button" value="/" class="score-button" @onclick="() => AddValueToScore(_spareValue)" />
     <input type="button" value="-" class="score-button" @onclick="() => AddValueToScore(0)" />
     <input type="button" value="F" class="score-button" @onclick="() => AddValueToScore(0)" />
-    <input type="button" value="&#x232B;" class="score-button" @onclick="() => RemoveLastValue()" />
+    <input type="button" value="Delete" class="score-button" @onclick="() => RemoveLastValue()" />
 </div>
 
 @code {

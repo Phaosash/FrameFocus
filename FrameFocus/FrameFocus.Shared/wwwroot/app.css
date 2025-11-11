@@ -50,21 +50,8 @@ h1:focus {
     border-color: #929292;
 }
 
-body {
-    background-color: #172b4e;
-    color: #f2f2f2f2;
-}
-
-h2 {
-    color: #00d7b5;
-}
-
-h4 {
-    color: #f2f2f2;
-}
-
 .recentPanels {
-    background-color: #01567b;
+    background-color: #a1a1a1;
     color: #f2f2f2;
     padding: 5px;
     border-radius: 8px;
@@ -97,14 +84,14 @@ h4 {
 }
 
 .averageChart {
-    background-color: #01567b;
+    background-color: #a1a1a1;
     border-radius: 8px;
     padding: 5px;
     width: 66%;
 }
 
 .dataChart {
-    background-color: #01567b;
+    background-color: #a1a1a1;
     border-radius: 8px;
     padding: 5px;
     width: 33%;
@@ -115,7 +102,7 @@ h4 {
 }
 
 .mainStats {
-    background-color: #01567b;
+    background-color: #a1a1a1;
     color: #f2f2f2;
     border-radius: 8px;
     padding: 5px;
@@ -125,37 +112,63 @@ h4 {
     text-align: center;
 }
 
-.sidePanel {
-    background-color: #01567b;
-    height: 100vh;
+/*  Score sheet style    */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 100%;
 }
 
-.bowling-game-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.frame {
-    width: auto;
-    padding: 1rem;
-    border: 1px solid #ccc;
-}
-
-.frame label {
-    display: flex;
-    margin: 1rem;
-}
-
-.frame input {
-    width: 50px;
-    padding: 5px;
-    margin: 0.25rem;
-    border: 1px solid #ddd;
-}
-
-.frame h5 {
-    margin: 0;
-    font-size: 1.2rem;
+/* Header row: just numbers centered */
+.header-box {
+    border: 1px solid #000;
     text-align: center;
+    font-weight: bold;
+    background-color: #a1a1a1;
+    margin: 2px;
+    border-radius: 8px;
+}
+
+/* Second row container box */
+.container-box {
+    border-top: 1px solid #000;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Two smaller boxes inside container */
+.small-box {
+    border: 1px solid #000;
+    background-color: #898989;
+    height: 3rem;
+    width: 3rem;
+    box-sizing: border-box;
+    margin: 2px;
+    border-radius: 8px;
+    align-content: center;
+}
+
+.input-box {
+    border: 1px solid #000;
+    text-align: center;
+    background-color: #a1a1a1;
+    margin: auto;
+    margin-top: 1rem;
+    border-radius: 8px;
+    width: 95%;
+}
+
+.score-button {
+    margin: 5px;
+    width: 13%;
+    height: 2rem;
+    border-radius: 8px;
+}
+
+.frame-total {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 24pt;
 }

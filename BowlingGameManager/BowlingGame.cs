@@ -25,6 +25,7 @@ public class BowlingGame {
 
     public void RecordShot (float value){
         if (_currentFrameIndex >= 10){
+            LoggingManager.Instance.LogWarning($"The current frame index was invalid. Index value: {_currentFrameIndex}");
             return;
         }
 
@@ -34,6 +35,7 @@ public class BowlingGame {
             frame.FirstShot = value;
 
             if (frame.IsStrike && _currentFrameIndex < 9){
+
                 _currentFrameIndex++;
             }
             return;
