@@ -55,6 +55,7 @@ public class CentralisedGameManager {
         foreach (var game in _games){
             var gameDto = new GameDto {
                 GameIndex = _games.IndexOf(game),
+                GameCount = _games.Count,
                 Strikes = game.Frames.Count(f => f.IsStrike),
                 Spares = game.Frames.Count(f => f.IsSpare),
                 OpenFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue)),

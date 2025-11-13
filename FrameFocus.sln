@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationLayer", "Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGameManager", "BowlingGameManager\BowlingGameManager.csproj", "{46316F8A-D4A4-4171-BD34-00B1230DEFC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameFocus.StatsLib", "FrameFocus.StatsLib\FrameFocus.StatsLib.csproj", "{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{46316F8A-D4A4-4171-BD34-00B1230DEFC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46316F8A-D4A4-4171-BD34-00B1230DEFC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46316F8A-D4A4-4171-BD34-00B1230DEFC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{040BF7E2-1014-4B45-8A1A-5BA559AA44EE} = {CE5961D4-D4B5-4DDE-8962-99C997158DA8}
 		{152B1BC4-82B8-474C-9E06-090082FB55F6} = {CE5961D4-D4B5-4DDE-8962-99C997158DA8}
 		{46316F8A-D4A4-4171-BD34-00B1230DEFC8} = {CE5961D4-D4B5-4DDE-8962-99C997158DA8}
+		{ACB2E9A5-69E5-4D2A-B2C6-5EAEDE562431} = {859F1526-04F2-4369-BEC3-BB27B399EE07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7223304E-919B-4F79-8BF6-06263D172074}

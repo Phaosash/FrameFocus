@@ -2,6 +2,7 @@
 
 public class GameDto {
     public int GameIndex { get; set; }
+    public int GameCount { get; set; }
     public float Strikes { get; set; }
     public float Spares { get; set; }
     public float OpenFrames { get; set; }

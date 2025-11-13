@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BowlingGameManager\BowlingGameManager.csproj" />
     <ProjectReference Include="..\..\FrameFocus.PageManagers\FrameFocus.PageManagers.csproj" />
+    <ProjectReference Include="..\..\FrameFocus.StatsLib\FrameFocus.StatsLib.csproj" />
   </ItemGroup>
 
 </Project>

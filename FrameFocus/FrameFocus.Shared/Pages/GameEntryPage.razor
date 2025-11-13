@@ -2,6 +2,9 @@
 @using BowlingGameManager
 @using BowlingGameManager.DTOs
 @using ErrorLogging
+@using FrameFocus.StatsLib
+@using FrameFocus.StatsLib.Interfaces
+@inject IBowlingSessionService SessionService
 @inject IJSRuntime JS
 
 <PageTitle>Multi-Game Bowling Tracker</PageTitle>
@@ -17,11 +20,12 @@
 @if (_gameManager.Games.Count > 0 && selectedGameIndex >= 0 && selectedGameIndex < _gameManager.Games.Count)
 {
     <div class="tabs" id="tabs-container">
-        @for (int i = 0; i < _gameManager.Games.Count; i++){
+        @for (int i = 0; i < _gameManager.Games.Count; i++)
+        {
             var index = i;
             <button class="tab-button @(index == selectedGameIndex ? "active" : "")"
-                id="game-tab-@index"
-                @onclick="async () => await SelectGame(index)">
+                    id="game-tab-@index"
+                    @onclick="async () => await SelectGame(index)">
                 Game @(index + 1)
             </button>
         }
@@ -48,19 +52,18 @@
             <p>Total Score: @_gameManager.Games[selectedGameIndex].TotalScore()</p>
         </div>
     </div>
-} else {
+}
+else
+{
     <p>No games available. Please create some games.</p>
 }
+
 
 @if (allGamesComplete)
 {
     <div class="alert alert-success" role="alert">
-        🎉 All games complete! You can now view the session totals.
+        🎉 All games complete! Session saved automatically.
     </div>
-
-    <button class="btn btn-primary" @onclick="ShowSessionTotals">
-        Show Session Totals
-    </button>
 }
 
 @code {
@@ -71,8 +74,10 @@
 
     private readonly float[] scoreValues = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1 };
 
-    protected override async Task OnAfterRenderAsync (bool firstRender){
-        if (firstRender){
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
             await JS.InvokeVoidAsync("eval", @"
                 window.scrollTabIntoView = function(tabId){
                     var tab = document.getElementById(tabId);
@@ -82,24 +87,23 @@
         }
     }
 
-    private void GenerateGames (){
+    private void GenerateGames()
+    {
         _gameManager = new CentralisedGameManager();
-        
-        for (int i = 0; i < numberOfGames; i++){
+        for (int i = 0; i < numberOfGames; i++)
             _gameManager.AddGame();
-        }
 
         selectedGameIndex = _gameManager.Games.Count > 0 ? 0 : -1;
+        allGamesComplete = false;
     }
 
-    private void AddShot (float value){
-        if (selectedGameIndex < 0 || selectedGameIndex >= _gameManager.Games.Count){
+    private void AddShot(float value)
+    {
+        if (selectedGameIndex < 0 || selectedGameIndex >= _gameManager.Games.Count)
             return;
-        }
 
-        if (value == -1){
+        if (value == -1)
             value = CalculateSpareValue();
-        }
 
         _gameManager.AddShotToGame(selectedGameIndex, value);
 
@@ -108,10 +112,10 @@
         StateHasChanged();
     }
 
-    private void RemoveLastShot (){
-        if (selectedGameIndex < 0 || selectedGameIndex >= _gameManager.Games.Count){
+    private void RemoveLastShot()
+    {
+        if (selectedGameIndex < 0 || selectedGameIndex >= _gameManager.Games.Count)
             return;
-        }
 
         _gameManager.RemoveLastShotFromGame(selectedGameIndex);
 
@@ -120,39 +124,71 @@
         StateHasChanged();
     }
 
-    private void CheckAllGamesComplete (){
+    private void CheckAllGamesComplete()
+    {
+        bool previousState = allGamesComplete;
         allGamesComplete = _gameManager.AreAllGamesComplete();
-    }
 
-    private float CalculateSpareValue (){
-        var game = _gameManager.Games[selectedGameIndex];
-        var frameIndex = Math.Min(game.CurrentFrameIndex, 9);
-        var frame = game.Frames[frameIndex];
-
-        return frame.FirstShot.HasValue ? 10 - frame.FirstShot.Value : 0;
-    }
-
-    private string DisplayButtonLabel (float value) => value == -1 ? "/" : (value == 10 ? "X" : value.ToString());
-
-    private async Task SelectGame (int index){
-        selectedGameIndex = index;
-
-        StateHasChanged();
-
-        await Task.Yield();
-
-        await Task.Delay(50);
-
-        try {
-            await JS.InvokeVoidAsync("scrollTabIntoView", $"game-tab-{index}");
-        } catch (JSException jsEx){
-            LoggingManager.Instance.LogError(jsEx, $"JS scrollTabIntoView failed: {jsEx.Message}");
+        // Automatically persist session when all games are complete
+        if (allGamesComplete && !previousState)
+        {
+            SaveSessionData();
         }
     }
 
-    private void ShowSessionTotals (){
-        var totals = _gameManager.GetSessionTotals();
+    private void SaveSessionData()
+    {
+        try {
+            var totals = _gameManager.GetSessionTotals();
 
-        LoggingManager.Instance.LogInformation($"Total Strikes: {totals.TotalStrikes}, Spares: {totals.TotalSpares}, Open Frames: {totals.TotalOpenFrames}, Total Score: {totals.TotalScore}");
+            var sessionStats = SessionService.CalculateSessionStats(
+                totals.GameCount,
+                totals.TotalScore,
+                totals.TotalStrikes,
+                totals.TotalSpares,
+                totals.TotalOpenFrames
+            );
+
+            SessionService.SaveSession(sessionStats);
+
+            LoggingManager.Instance.LogInformation(
+                $"Session saved: {sessionStats.SessionDate}, " +
+                $"Games: {sessionStats.GameCount}, Avg: {sessionStats.AverageScore:F2}, " +
+                $"Strikes: {sessionStats.StrikePercent:F1}%, Spares: {sessionStats.SparePercent:F1}%"
+            );
+        }
+        catch (Exception ex)
+        {
+            LoggingManager.Instance.LogError(ex, "Failed to save bowling session data.");
+        }
+    }
+
+    private float CalculateSpareValue()
+    {
+        var game = _gameManager.Games[selectedGameIndex];
+        var frameIndex = Math.Min(game.CurrentFrameIndex, 9);
+        var frame = game.Frames[frameIndex];
+        return frame.FirstShot.HasValue ? 10 - frame.FirstShot.Value : 0;
+    }
+
+    private string DisplayButtonLabel(float value) =>
+        value == -1 ? "/" : (value == 10 ? "X" : value.ToString());
+
+    private async Task SelectGame(int index)
+    {
+        selectedGameIndex = index;
+        StateHasChanged();
+
+        await Task.Yield();
+        await Task.Delay(50);
+
+        try
+        {
+            await JS.InvokeVoidAsync("scrollTabIntoView", $"game-tab-{index}");
+        }
+        catch (JSException jsEx)
+        {
+            LoggingManager.Instance.LogError(jsEx, $"JS scrollTabIntoView failed: {jsEx.Message}");
+        }
     }
 }
