@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BowlingGameManager.DTOs;
 
 namespace BowlingGameManager;
 
 public class CentralisedGameManager {
+    public DateTime SessionDate { get; set; } = DateTime.Now;
+
     private readonly List<BowlingGame> _games = [];
 
     public IReadOnlyList<BowlingGame> Games => _games.AsReadOnly();
@@ -35,17 +33,46 @@ public class CentralisedGameManager {
         }
     }
 
-    public (int strikes, int spares, int openFrames) GetGameStats (int gameIndex){
+    public (float strikes, float spares, float openFrames) GetGameStats (int gameIndex){
         if(!IsValidGameIndex(gameIndex)){
             return (0, 0, 0);
         }
 
         var game = _games[gameIndex];
 
-        int strikes = game.Frames.Count(f => f.IsStrike);
-        int spares = game.Frames.Count(f => f.IsSpare);
-        int openFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue));
+        float strikes = game.Frames.Count(f => f.IsStrike);
+        float spares = game.Frames.Count(f => f.IsSpare);
+        float openFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue));
 
         return (strikes, spares, openFrames);
+    }
+
+    public GameSessionDto GetSessionTotals (){
+        var sessionDto = new GameSessionDto {
+            SessionDate = SessionDate
+        };
+
+        foreach (var game in _games){
+            var gameDto = new GameDto {
+                GameIndex = _games.IndexOf(game),
+                Strikes = game.Frames.Count(f => f.IsStrike),
+                Spares = game.Frames.Count(f => f.IsSpare),
+                OpenFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue)),
+                TotalScore = game.TotalScore()
+            };
+
+            sessionDto.Games.Add(gameDto);
+
+            sessionDto.TotalStrikes += gameDto.Strikes;
+            sessionDto.TotalSpares += gameDto.Spares;
+            sessionDto.TotalOpenFrames += gameDto.OpenFrames;
+            sessionDto.TotalScore += gameDto.TotalScore;
+        }
+
+            return sessionDto;
+    }
+
+    public bool AreAllGamesComplete (){
+        return _games.All(game => game.IsGameComplete());
     }
 }
