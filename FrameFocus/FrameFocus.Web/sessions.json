@@ -1,0 +1,15 @@
+[
+  {
+    "Id": 1,
+    "SessionDate": "2025-11-13T14:45:15.8723591+08:00",
+    "GameCount": 0,
+    "TotalScore": 771,
+    "TotalStrikes": 21,
+    "TotalSpares": 9,
+    "TotalOpenFrames": 0,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  }
+]

@@ -1,17 +1,17 @@
 ﻿namespace BowlingGameManager.DTOs;
 
 public class Frame {
-    private readonly float frameScoreTarget = 10;
-    private readonly float lowestValue = 0;
+    private const float MaxPins = 10;
+    private const float MinPins = 0;
 
     public float? FirstShot { get; set; }
     public float? SecondShot { get; set; }
     public float? BonusShot { get; set; }
-    public bool IsStrike => FirstShot == frameScoreTarget;
-    public bool IsSpare => FirstShot.HasValue && SecondShot.HasValue && !IsStrike && (FirstShot.Value + SecondShot.Value == frameScoreTarget);
+    public bool IsStrike => FirstShot == MaxPins;
+    public bool IsSpare => FirstShot.HasValue && SecondShot.HasValue && !IsStrike && (FirstShot.Value + SecondShot.Value == MaxPins);
 
     public bool IsValidShot (float count){
-        return count >= lowestValue && count <= frameScoreTarget;
+        return count >= MinPins && count <= MaxPins;
     }
 
     public float FrameScore {
@@ -25,21 +25,25 @@ public class Frame {
         }
     }
 
-    public Frame (float? firstValue = null, float? secondValue = null, float? bonusValue = null){
-        if (firstValue.HasValue && !IsValidShot(firstValue.Value)){
-            throw new ArgumentException("Invalid roll: First roll exceeds valid pin range.");
+    public Frame (float? firstShot = null, float? secondShot = null, float? bonusShot = null){
+        if (firstShot.HasValue && !IsValidShot(firstShot.Value)){
+            throw new ArgumentException("Invalid first shot: must be between 0 and 10.");
         }
 
-        if (secondValue.HasValue && (secondValue.Value < 0 || (firstValue.HasValue && firstValue.Value < 10 && firstValue.Value + secondValue.Value > 10))){
-            throw new ArgumentException("Invalid roll: Total pins in a frame can't exceed 10.");
+        if (secondShot.HasValue && !IsValidShot(secondShot.Value)){
+            throw new ArgumentException("Invalid second shot: must be between 0 and 10.");
         }
 
-        if (bonusValue.HasValue && ((firstValue.GetValueOrDefault() + secondValue.GetValueOrDefault() < 10) || bonusValue.Value < 0)){
-            throw new ArgumentException("Invalid third roll: Only allowed in the 10th frame on strike or spare.");
+        if (firstShot.HasValue && secondShot.HasValue && firstShot.Value + secondShot.Value > MaxPins){
+            throw new ArgumentException("Invalid frame: total pins in first two shots cannot exceed 10.");
         }
 
-        FirstShot = null;
-        SecondShot = null;
-        BonusShot = null;
+        if (bonusShot.HasValue && bonusShot.Value < 0){
+            throw new ArgumentException("Invalid bonus shot: must be >= 0.");
+        }
+
+        FirstShot = firstShot;
+        SecondShot = secondShot;
+        BonusShot = bonusShot;
     }
 }

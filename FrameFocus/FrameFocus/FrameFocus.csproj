@@ -67,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FrameFocus.StatsLib\FrameFocus.StatsLib.csproj" />
     <ProjectReference Include="..\FrameFocus.Shared\FrameFocus.Shared.csproj" />
   </ItemGroup>
 

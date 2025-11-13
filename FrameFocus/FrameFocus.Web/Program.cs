@@ -1,4 +1,6 @@
 using FrameFocus.Shared.Services;
+using FrameFocus.StatsLib;
+using FrameFocus.StatsLib.Interfaces;
 using FrameFocus.Web.Components;
 using FrameFocus.Web.Services;
 
@@ -10,6 +12,8 @@ builder.Services.AddRazorComponents()
 
 // Add device-specific services used by the FrameFocus.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
+
+builder.Services.AddSingleton<IBowlingSessionService, BowlingSessionService>();
 
 var app = builder.Build();
 

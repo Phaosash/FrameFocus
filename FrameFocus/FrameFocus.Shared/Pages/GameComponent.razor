@@ -1,0 +1,68 @@
+﻿@using BowlingGameManager
+
+<div class="grid-container">
+    @for (int i = 0; i < Game.Frames.Count; i++)
+    {
+        var frame = Game.Frames[i];
+        <div class="header-box">
+            <div>Frame @(i + 1)</div>
+
+            <div class="container-box">
+                <!-- First shot -->
+                <div class="small-box @(frame.IsStrike ? "strike" : "")">
+                    @DisplayValue(frame.FirstShot)
+                </div>
+
+                <!-- Second shot -->
+                <div class="small-box @(frame.IsSpare && !frame.IsStrike ? "spare" : "")">
+                    @DisplayValue(frame.SecondShot, frame.FirstShot)
+                </div>
+
+                <!-- Bonus shot (only for 10th frame if applicable) -->
+                @if (i == 9 && (frame.IsStrike || frame.IsSpare))
+                {
+                    <div class="small-box bonus">
+                        @DisplayValue(frame.BonusShot)
+                    </div>
+                }
+            </div>
+
+            <!-- Running total -->
+            <div class="frame-total">
+                @DisplayRunningTotal(i)
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public BowlingGame Game { get; set; }
+
+    private string DisplayValue(float? value, float? firstShot = null)
+    {
+        if (!value.HasValue)
+            return string.Empty;
+
+        if (value.Value == 0)
+            return "-";
+
+        if (firstShot.HasValue && (firstShot.Value + value.Value == 10) && firstShot.Value != 10 && value.Value != 10)
+            return "/";
+
+        if (value.Value == 10)
+            return "X";
+
+        return value.Value.ToString();
+    }
+
+    private string DisplayRunningTotal(int frameIndex)
+    {
+        Game.TotalScore(); // updates FrameScores
+
+        if (frameIndex < Game.FrameScores.Count)
+            return Game.FrameScores[frameIndex].ToString();
+
+        return string.Empty;
+    }
+}
