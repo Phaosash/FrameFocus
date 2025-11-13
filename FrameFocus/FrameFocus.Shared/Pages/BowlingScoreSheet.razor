@@ -66,12 +66,29 @@
 
     //  This method is used to initialise adding the score on the backend.
     private void AddValueToScore (float value){
-        _gameManager.RecordShot(value);
+        _gameManager.AddValueToScore(value);
+        UpdateSpareValue();
         StateHasChanged();
     }
 
     private void RemoveLastValue (){
-        //  TODO: Tell the data manager to remove the last entry
+        _gameManager.RemoveLastValue();
+        UpdateSpareValue();
+        StateHasChanged();
+    }
+
+    private void UpdateSpareValue (){
+        var frameIndex = Math.Min(_gameManager.CurrentFrameIndex, 9);
+        var frame = _gameManager.Frames[frameIndex];
+
+        if (frame.FirstShot.HasValue)
+        {
+            _spareValue = 10 - frame.FirstShot.Value;
+        }
+        else
+        {
+            _spareValue = 0;
+        }
     }
 
     //  This method is used to display the special characters on the score board.

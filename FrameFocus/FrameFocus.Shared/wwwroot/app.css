@@ -112,14 +112,15 @@ h1:focus {
     text-align: center;
 }
 
-/*  Score sheet style    */
+/* Grid for frames */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     width: 100%;
+    gap: 4px; /* spacing between frames */
 }
 
-/* Header row: just numbers centered */
+/* Each frame container */
 .header-box {
     border: 1px solid #000;
     text-align: center;
@@ -127,28 +128,64 @@ h1:focus {
     background-color: #a1a1a1;
     margin: 2px;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px;
 }
 
-/* Second row container box */
+/* Container for shot boxes inside a frame */
 .container-box {
     border-top: 1px solid #000;
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* space out the shot boxes evenly */
+    width: 100%;
+    margin-top: 4px;
 }
 
-/* Two smaller boxes inside container */
+/* Individual shot box */
 .small-box {
     border: 1px solid #000;
     background-color: #898989;
     height: 3rem;
     width: 3rem;
     box-sizing: border-box;
-    margin: 2px;
-    border-radius: 8px;
-    align-content: center;
+    margin: 1px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
 }
 
+/* Highlight strike */
+.small-box.strike {
+    background-color: #ff4d4d; /* red */
+}
+
+/* Highlight spare */
+.small-box.spare {
+    background-color: #4d79ff; /* blue */
+}
+
+/* Bonus shot box in 10th frame */
+.small-box.bonus {
+    background-color: #4dff88; /* green */
+}
+
+/* Running total for each frame */
+.frame-total {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 4px;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+/* Input section */
 .input-box {
     border: 1px solid #000;
     text-align: center;
@@ -157,18 +194,71 @@ h1:focus {
     margin-top: 1rem;
     border-radius: 8px;
     width: 95%;
+    padding: 5px;
 }
 
+/* Score buttons */
 .score-button {
     margin: 5px;
     width: 13%;
     height: 2rem;
     border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
-.frame-total {
-    text-align: center;
+/* Tabs container */
+.tabs {
+    display: flex;
+    flex-wrap: nowrap; /* prevent wrapping */
+    overflow-x: auto; /* horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+    margin: 1rem 0;
+    padding-bottom: 2px; /* space for scrollbar */
+}
+
+/* Hide default scrollbar in Webkit browsers */
+.tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.tabs::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+/* Individual tab button */
+.tab-button {
+    padding: 0.5rem 1rem;
+    margin-right: 5px;
+    border: 1px solid #000;
+    border-radius: 8px 8px 0 0;
+    background-color: #d0d0d0;
+    cursor: pointer;
     font-weight: bold;
-    margin-top: 1rem;
-    font-size: 24pt;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Active tab style */
+.tab-button.active {
+    background-color: #4CAF50; /* green */
+    color: white;
+    border-bottom: none; /* visually connected to the content */
+}
+
+/* Hover effect */
+.tab-button:hover:not(.active) {
+    background-color: #a1a1a1;
+}
+
+/* Tab content container */
+.tab-content {
+    border: 1px solid #000;
+    border-radius: 0 8px 8px 8px;
+    padding: 1rem;
+    background-color: #f0f0f0;
 }
