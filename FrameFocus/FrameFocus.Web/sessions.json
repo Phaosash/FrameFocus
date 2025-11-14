@@ -11,5 +11,44 @@
     "StrikePercent": 0,
     "SparePercent": 0,
     "OpenFramePercent": 0
+  },
+  {
+    "Id": 2,
+    "SessionDate": "2025-11-14T09:58:48.3895345+08:00",
+    "GameCount": 0,
+    "TotalScore": 638,
+    "TotalStrikes": 15,
+    "TotalSpares": 14,
+    "TotalOpenFrames": 1,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  },
+  {
+    "Id": 3,
+    "SessionDate": "2025-11-14T09:58:54.0187562+08:00",
+    "GameCount": 0,
+    "TotalScore": 639,
+    "TotalStrikes": 15,
+    "TotalSpares": 14,
+    "TotalOpenFrames": 1,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  },
+  {
+    "Id": 4,
+    "SessionDate": "2025-11-14T10:18:38.5939669+08:00",
+    "GameCount": 0,
+    "TotalScore": 633,
+    "TotalStrikes": 15,
+    "TotalSpares": 14,
+    "TotalOpenFrames": 1,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
   }
 ]

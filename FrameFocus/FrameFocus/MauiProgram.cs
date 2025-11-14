@@ -1,4 +1,6 @@
-﻿using FrameFocus.StatsLib;
+﻿using FrameFocus.Services;
+using FrameFocus.Shared.Services;
+using FrameFocus.StatsLib;
 using FrameFocus.StatsLib.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +13,7 @@ public static class MauiProgram {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
         });
 
+        builder.Services.AddSingleton<IFormFactor, FormFactor>();
         builder.Services.AddSingleton<IBowlingSessionService, BowlingSessionService>();
 
         builder.Services.AddMauiBlazorWebView();
