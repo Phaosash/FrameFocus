@@ -121,13 +121,14 @@
 
     private void SaveSessionData (){
         try {
+            _gameManager.SetNumberOfGames(numberOfGames);
             var totals = _gameManager.GetSessionTotals();
 
             var sessionStats = SessionService.CalculateSessionStats(totals.GameCount, totals.TotalScore, totals.TotalStrikes, totals.TotalSpares, totals.TotalOpenFrames);
 
             SessionService.SaveSession(sessionStats);
 
-            LoggingManager.Instance.LogInformation($"Session saved: {sessionStats.SessionDate}, " + $"Games: {sessionStats.GameCount}, Avg: {sessionStats.AverageScore:F2}, " + $"Strikes: {sessionStats.StrikePercent:F1}%, Spares: {sessionStats.SparePercent:F1}%");
+            LoggingManager.Instance.LogInformation($"Session saved: {sessionStats.SessionDate}, " + $"Games: {sessionStats.GameCount}, Avg: {sessionStats.AverageScore:F2}, " + $"Strikes: {sessionStats.StrikePercent:F1}%, Spares: {sessionStats.SparePercent:F1}%, Opens: {sessionStats.OpenFramePercent:F1}%");
         } catch (Exception ex){
             LoggingManager.Instance.LogError(ex, "Failed to save bowling session data.");
         }

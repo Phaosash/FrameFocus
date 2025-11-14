@@ -50,5 +50,57 @@
     "StrikePercent": 0,
     "SparePercent": 0,
     "OpenFramePercent": 0
+  },
+  {
+    "Id": 5,
+    "SessionDate": "2025-11-14T10:57:08.3694642+08:00",
+    "GameCount": 0,
+    "TotalScore": 630,
+    "TotalStrikes": 14,
+    "TotalSpares": 13,
+    "TotalOpenFrames": 3,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  },
+  {
+    "Id": 6,
+    "SessionDate": "2025-11-14T10:58:53.8648043+08:00",
+    "GameCount": 0,
+    "TotalScore": 201,
+    "TotalStrikes": 5,
+    "TotalSpares": 3,
+    "TotalOpenFrames": 2,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  },
+  {
+    "Id": 7,
+    "SessionDate": "2025-11-14T11:01:19.0992731+08:00",
+    "GameCount": 0,
+    "TotalScore": 214,
+    "TotalStrikes": 6,
+    "TotalSpares": 2,
+    "TotalOpenFrames": 2,
+    "AverageScore": 0,
+    "StrikePercent": 0,
+    "SparePercent": 0,
+    "OpenFramePercent": 0
+  },
+  {
+    "Id": 8,
+    "SessionDate": "2025-11-14T11:03:04.3530057+08:00",
+    "GameCount": 1,
+    "TotalScore": 206,
+    "TotalStrikes": 6,
+    "TotalSpares": 3,
+    "TotalOpenFrames": 1,
+    "AverageScore": 206,
+    "StrikePercent": 60.000004,
+    "SparePercent": 30.000002,
+    "OpenFramePercent": 10
   }
 ]

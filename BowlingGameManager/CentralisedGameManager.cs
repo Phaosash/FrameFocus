@@ -6,11 +6,16 @@ public class CentralisedGameManager {
     public DateTime SessionDate { get; set; } = DateTime.Now;
 
     private readonly List<BowlingGame> _games = [];
+    private int _numberOfGames;
 
     public IReadOnlyList<BowlingGame> Games => _games.AsReadOnly();
 
     public void AddGame (){
         _games.Add(new BowlingGame());
+    }
+
+    public void SetNumberOfGames (int value){
+        _numberOfGames = value;
     }
 
     public void RemoveGame (){
@@ -55,7 +60,7 @@ public class CentralisedGameManager {
         foreach (var game in _games){
             var gameDto = new GameDto {
                 GameIndex = _games.IndexOf(game),
-                GameCount = _games.Count,
+                GameCount = _numberOfGames,
                 Strikes = game.Frames.Count(f => f.IsStrike),
                 Spares = game.Frames.Count(f => f.IsSpare),
                 OpenFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue)),
@@ -63,14 +68,14 @@ public class CentralisedGameManager {
             };
 
             sessionDto.Games.Add(gameDto);
-
+            sessionDto.GameCount = gameDto.GameCount;
             sessionDto.TotalStrikes += gameDto.Strikes;
             sessionDto.TotalSpares += gameDto.Spares;
             sessionDto.TotalOpenFrames += gameDto.OpenFrames;
             sessionDto.TotalScore += gameDto.TotalScore;
         }
 
-            return sessionDto;
+        return sessionDto;
     }
 
     public bool AreAllGamesComplete (){
