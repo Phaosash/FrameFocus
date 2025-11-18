@@ -38,12 +38,16 @@ public class BowlingSessionService: IBowlingSessionService {
 
     public void SaveSession (SessionStats session){
         _sessions.Add(session);
-        SaveToFile();
+        SaveToFile(GetOptions());
     }
 
-    private void SaveToFile (){
+    private static JsonSerializerOptions GetOptions (){
+        return new() { WriteIndented = true };
+    }
+
+    private void SaveToFile (JsonSerializerOptions options){
         try {
-            string json = JsonSerializer.Serialize(_sessions, new JsonSerializerOptions { WriteIndented = true });
+            string json = JsonSerializer.Serialize(_sessions, options);
             File.WriteAllText(_filePath, json);
         } catch (Exception ex){
             LoggingManager.Instance.LogError(ex, "Failed to save the file.");
@@ -52,5 +56,5 @@ public class BowlingSessionService: IBowlingSessionService {
 
     public IEnumerable<SessionStats> GetAllSessions () => _sessions;
 
-    public SessionStats GetMostRecentSession() => _sessions.OrderByDescending(s => s.SessionDate).FirstOrDefault();
+    public SessionStats GetMostRecentSession() =>  _sessions.OrderByDescending(s => s.SessionDate).FirstOrDefault();
 }

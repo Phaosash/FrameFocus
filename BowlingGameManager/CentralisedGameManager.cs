@@ -1,4 +1,5 @@
 ﻿using BowlingGameManager.DTOs;
+using ErrorLogging;
 
 namespace BowlingGameManager;
 
@@ -18,12 +19,6 @@ public class CentralisedGameManager {
         _numberOfGames = value;
     }
 
-    public void RemoveGame (){
-        if (_games.Count > 0){
-            _games.RemoveAt(_games.Count - 1);
-        }
-    }
-
     public void AddShotToGame (int gameIndex, float value){
         if (IsValidGameIndex(gameIndex)){
             _games[gameIndex].AddValueToScore(value);
@@ -38,44 +33,47 @@ public class CentralisedGameManager {
         }
     }
 
-    public (float strikes, float spares, float openFrames) GetGameStats (int gameIndex){
-        if(!IsValidGameIndex(gameIndex)){
-            return (0, 0, 0);
-        }
-
-        var game = _games[gameIndex];
-
-        float strikes = game.Frames.Count(f => f.IsStrike);
-        float spares = game.Frames.Count(f => f.IsSpare);
-        float openFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue));
-
-        return (strikes, spares, openFrames);
-    }
-
     public GameSessionDto GetSessionTotals (){
-        var sessionDto = new GameSessionDto {
-            SessionDate = SessionDate
-        };
-
-        foreach (var game in _games){
-            var gameDto = new GameDto {
-                GameIndex = _games.IndexOf(game),
-                GameCount = _numberOfGames,
-                Strikes = game.Frames.Count(f => f.IsStrike),
-                Spares = game.Frames.Count(f => f.IsSpare),
-                OpenFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue)),
-                TotalScore = game.TotalScore()
+        try {
+            var sessionDto = new GameSessionDto {
+                SessionDate = SessionDate
             };
 
+            foreach (var game in _games){
+                var gameDto = CreateNewGameDto(game);
+
+                CreateSessionDto(gameDto, sessionDto);
+            }
+
+            return sessionDto;
+        } catch (Exception ex){
+            LoggingManager.Instance.LogError(ex, "Exception encountered when attempting to get the session totals.");
+            return new();
+        }
+    }
+
+    private GameDto CreateNewGameDto (BowlingGame game){
+        return new GameDto {
+            GameIndex = _games.IndexOf(game),
+            GameCount = _numberOfGames,
+            Strikes = game.Frames.Count(f => f.IsStrike),
+            Spares = game.Frames.Count(f => f.IsSpare),
+            OpenFrames = game.Frames.Count(f => !f.IsStrike && !f.IsSpare && (f.FirstShot.HasValue || f.SecondShot.HasValue)),
+            TotalScore = game.TotalScore()
+        };
+    }
+
+    private static void CreateSessionDto (GameDto gameDto, GameSessionDto sessionDto){
+        try {
             sessionDto.Games.Add(gameDto);
             sessionDto.GameCount = gameDto.GameCount;
             sessionDto.TotalStrikes += gameDto.Strikes;
             sessionDto.TotalSpares += gameDto.Spares;
             sessionDto.TotalOpenFrames += gameDto.OpenFrames;
             sessionDto.TotalScore += gameDto.TotalScore;
+        } catch (Exception ex){
+            LoggingManager.Instance.LogError(ex, "Excpetion encountered when creating the session dto.");
         }
-
-        return sessionDto;
     }
 
     public bool AreAllGamesComplete (){

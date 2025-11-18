@@ -38,12 +38,6 @@
             }
             <button class="score-button delete" @onclick="RemoveLastShot">Delete</button>
         </div>
-
-        <div class="game-stats">
-            @{ var stats = _gameManager.GetGameStats(selectedGameIndex); }
-            <p>Strikes: @stats.strikes | Spares: @stats.spares | Open Frames: @stats.openFrames</p>
-            <p>Total Score: @_gameManager.Games[selectedGameIndex].TotalScore()</p>
-        </div>
     </div>
 }
 
