@@ -1,5 +1,6 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #f2f2f2;
 }
 
 a, .btn-link {
@@ -50,8 +51,9 @@ h1:focus {
     border-color: #929292;
 }
 
+/******     Dashboard style        *******/
 .recentPanels {
-    background-color: #a1a1a1;
+    background-color: #016587;
     color: #f2f2f2;
     padding: 5px;
     border-radius: 8px;
@@ -84,14 +86,14 @@ h1:focus {
 }
 
 .averageChart {
-    background-color: #a1a1a1;
+    background-color: #016587;
     border-radius: 8px;
     padding: 5px;
     width: 66%;
 }
 
 .dataChart {
-    background-color: #a1a1a1;
+    background-color: #016587;
     border-radius: 8px;
     padding: 5px;
     width: 33%;
@@ -102,7 +104,7 @@ h1:focus {
 }
 
 .mainStats {
-    background-color: #a1a1a1;
+    background-color: #016587;
     color: #f2f2f2;
     border-radius: 8px;
     padding: 5px;
@@ -122,10 +124,10 @@ h1:focus {
 
 /* Each frame container */
 .header-box {
-    border: 1px solid #000;
+    border: 1px solid #2496B8;
     text-align: center;
     font-weight: bold;
-    background-color: #a1a1a1;
+    background-color: #016587;
     margin: 2px;
     border-radius: 8px;
     display: flex;
@@ -136,7 +138,7 @@ h1:focus {
 
 /* Container for shot boxes inside a frame */
 .container-box {
-    border-top: 1px solid #000;
+    border-top: 1px solid #2496B8;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between; /* space out the shot boxes evenly */
@@ -146,8 +148,8 @@ h1:focus {
 
 /* Individual shot box */
 .small-box {
-    border: 1px solid #000;
-    background-color: #898989;
+    border: 1px solid #2496B8;
+    background-color: #2496B8;
     height: 3rem;
     width: 3rem;
     box-sizing: border-box;
@@ -187,9 +189,9 @@ h1:focus {
 
 /* Input section */
 .input-box {
-    border: 1px solid #000;
+    border: 1px solid #2496B8;
     text-align: center;
-    background-color: #a1a1a1;
+    background-color: #080A17;
     margin: auto;
     margin-top: 1rem;
     border-radius: 8px;
@@ -202,9 +204,12 @@ h1:focus {
     margin: 5px;
     width: 13%;
     height: 2rem;
+    border: 1px solid #2496B8;
     border-radius: 8px;
     font-weight: bold;
     font-size: 1rem;
+    background-color: #016587;
+    color: #fff;
 }
 
 /* Tabs container */
@@ -235,16 +240,17 @@ h1:focus {
 .tab-button {
     flex: 0 0 auto; /* prevent buttons from shrinking */
     padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #2496B8;
     border-radius: 0.25rem;
-    background-color: #f8f9fa;
+    background-color: #016587;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
+    color: #fff;
 }
 
 /* Active tab style */
 .tab-button.active {
-    background-color: #007bff;
+    background-color: #2496B8;
     color: white;
     font-weight: bold;
 }
@@ -256,8 +262,8 @@ h1:focus {
 
 /* Tab content container */
 .tab-content {
-    border: 1px solid #000;
-    border-radius: 0 8px 8px 8px;
+    border: 1px solid #2496B8;
+    border-radius: 8px;
     padding: 1rem;
-    background-color: #f0f0f0;
+    background-color: #004059;
 }
